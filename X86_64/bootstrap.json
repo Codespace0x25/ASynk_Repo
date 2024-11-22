@@ -1,0 +1,11 @@
+{
+  "Linux":{
+    "depindincs":["libncurses","bc","flex","bison","libssl-dev","cpio"],
+    "tarball":"https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.tar.xz",
+    "opshonl":{
+      "nvida":{
+        "depindincs":"https://www.nvidia.com/content/DriverDownloads/confirmation.php?url=/XFree86/Linux-x86_64/535.154.05/NVIDIA-Linux-x86_64-535.154.05.run&lang=us&type=geforcem"
+      }
+    }
+  }
+}
