@@ -1,11 +1,29 @@
 {
   "Linux":{
-    "depindincs":["libncurses","bc","flex","bison","libssl-dev","cpio"],
-    "tarball":"https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.tar.xz",
+    "depindincs":["bc","flex","libssl","cpio"],
+    "tarball":"linux-6.12.tar.xz",
+    "url":"https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.tar.xz",
     "opshonl":{
       "nvida":{
-        "depindincs":"https://www.nvidia.com/content/DriverDownloads/confirmation.php?url=/XFree86/Linux-x86_64/535.154.05/NVIDIA-Linux-x86_64-535.154.05.run&lang=us&type=geforcem"
+        "depindincs":"nvidia"
       }
-    }
+    },
+    "build":[
+      "make config",
+      "make -$(nprog)",
+      "make modles",
+      "make install"
+    ]
+  },
+  "AShell":{
+    "depindincs":["bc","flex","libssl","cpio"],
+    "tarball":"AShell-0.5.0.tar.xz",
+    "url":"n/a",
+    "opshonl":{
+    },
+    "build":[
+      "make -$(nprog)",
+      "make install"
+    ]
   }
 }
