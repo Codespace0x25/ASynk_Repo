@@ -1,28 +1,194 @@
 {
-  "Linux":{
-    "depindincs":["bc","flex","libssl","cpio"],
-    "tarball":"linux-6.12.tar.xz",
-    "url":"https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.tar.xz",
-    "opshonl":{
-      "nvida":{
-        "depindincs":"nvidia"
+  "Linux": {
+    "depindincs": ["bc", "flex", "libssl", "cpio", "make", "gcc", "binutils", "libc6-dev"],
+    "tarball": "linux-6.12.tar.xz",
+    "url": "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.tar.xz",
+    "opshonl": {
+      "nvidia": {
+        "depindincs": ["nvidia-driver"]
+      },
+      "intel": {
+        "depindincs": ["intel-microcode"]
       }
     },
-    "build":[
+    "build": [
       "make config",
-      "make -$(nprog)",
-      "make modles",
+      "make -j$(nproc)",
+      "make modules",
       "make install"
     ]
   },
-  "AShell":{
-    "depindincs":[],
-    "tarball":"0.5.0.tar.gz",
-    "url":"https://github.com/Codespace0x25/Ashell/archive/refs/tags/0.5.0.tar.gz",
-    "opshonl":{
-    },
-    "build":[
-      "make -$(nprog)",
+  "Glibc": {
+    "depindincs": ["gcc", "make", "binutils"],
+    "tarball": "glibc-2.38.tar.gz",
+    "url": "http://ftp.gnu.org/gnu/libc/glibc-2.38.tar.gz",
+    "opshonl": {},
+    "build": [
+      "mkdir build && cd build",
+      "../configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Bash": {
+    "depindincs": ["make", "gcc"],
+    "tarball": "bash-5.2.tar.gz",
+    "url": "https://ftp.gnu.org/gnu/bash/bash-5.2.tar.gz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Coreutils": {
+    "depindincs": ["gcc", "make"],
+    "tarball": "coreutils-9.2.tar.xz",
+    "url": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.2.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Nano": {
+    "depindincs": ["make", "gcc"],
+    "tarball": "nano-7.0.tar.xz",
+    "url": "https://www.nano-editor.org/dist/v7/nano-7.0.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Git": {
+    "depindincs": ["make", "gcc", "curl", "gettext", "zlib1g-dev", "libssl-dev", "perl"],
+    "tarball": "git-2.39.1.tar.gz",
+    "url": "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.39.1.tar.gz",
+    "opshonl": {},
+    "build": [
+      "make configure",
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Curl": {
+    "depindincs": ["make", "gcc", "openssl"],
+    "tarball": "curl-7.86.0.tar.xz",
+    "url": "https://curl.se/download/curl-7.86.0.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Zlib": {
+    "depindincs": ["make", "gcc"],
+    "tarball": "zlib-1.2.12.tar.xz",
+    "url": "https://zlib.net/zlib-1.2.12.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Openssh": {
+    "depindincs": ["make", "gcc", "zlib1g-dev"],
+    "tarball": "openssh-9.2p1.tar.gz",
+    "url": "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.2p1.tar.gz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Ncurses": {
+    "depindincs": ["make", "gcc"],
+    "tarball": "ncurses-6.3.tar.gz",
+    "url": "https://ftp.gnu.org/gnu/ncurses/ncurses-6.3.tar.gz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Linux-Firmware": {
+    "depindincs": [],
+    "tarball": "linux-firmware-20230118.tar.xz",
+    "url": "https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-20230118.tar.xz",
+    "opshonl": {},
+    "build": [
+      "tar -xvf linux-firmware-20230118.tar.xz -C /lib/firmware"
+    ]
+  },
+  "OpenSSL": {
+    "depindincs": ["make", "gcc"],
+    "tarball": "openssl-3.0.6.tar.gz",
+    "url": "https://www.openssl.org/source/openssl-3.0.6.tar.gz",
+    "opshonl": {},
+    "build": [
+      "./config --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Systemd": {
+    "depindincs": ["gcc", "make", "pkg-config"],
+    "tarball": "systemd-253.4.tar.xz",
+    "url": "https://github.com/systemd/systemd/releases/download/v253.4/systemd-253.4.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Elogin": {
+    "depindincs": ["make", "gcc"],
+    "tarball": "elogin-1.0.0.tar.gz",
+    "url": "https://github.com/username/elogin/archive/refs/tags/1.0.0.tar.gz",
+    "opshonl": {},
+    "build": [
+      "make",
+      "make install"
+    ]
+  },
+  "Sudo": {
+    "depindincs": ["make", "gcc"],
+    "tarball": "sudo-1.9.11p3.tar.gz",
+    "url": "https://www.sudo.ws/dist/sudo-1.9.11p3.tar.gz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Coreutils": {
+    "depindincs": ["make", "gcc"],
+    "tarball": "coreutils-8.32.tar.xz",
+    "url": "https://ftp.gnu.org/gnu/coreutils/coreutils-8.32.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "AShell": {
+    "depindincs": [],
+    "tarball": "0.5.0.tar.gz",
+    "url": "https://github.com/Codespace0x25/Ashell/archive/refs/tags/0.5.0.tar.gz",
+    "opshonl": {},
+    "build": [
+      "make -j$(nproc)",
       "make install"
     ]
   }
