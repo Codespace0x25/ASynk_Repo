@@ -18,16 +18,92 @@
       "make install"
     ]
   },
-  "Glibc": {
-    "depindincs": ["gcc", "make", "binutils"],
-    "tarball": "glibc-2.38.tar.gz",
-    "url": "http://ftp.gnu.org/gnu/libc/glibc-2.38.tar.gz",
+  "Nvidia-Driver": {
+    "depindincs": ["gcc", "make", "linux-headers"],
+    "tarball": "NVIDIA-Linux-x86_64-535.104.05.run",
+    "url": "https://us.download.nvidia.com/XFree86/Linux-x86_64/535.104.05/NVIDIA-Linux-x86_64-535.104.05.run",
     "opshonl": {},
     "build": [
-      "mkdir build && cd build",
-      "../configure --prefix=/usr",
+      "sh NVIDIA-Linux-x86_64-535.104.05.run"
+    ]
+  },
+  "Xorg": {
+    "depindincs": ["gcc", "make", "pkg-config", "libxcb-dev", "xcb-proto", "xorgproto", "libx11-dev", "mesa-utils", "glxinfo"],
+    "tarball": "xorg-server-21.1.8.tar.xz",
+    "url": "https://www.x.org/archive/individual/xserver/xorg-server-21.1.8.tar.xz",
+    "opshonl": {
+      "nvidia": {
+        "depindincs": ["nvidia-driver"]
+      }
+    },
+    "build": [
+      "./configure --prefix=/usr",
       "make -j$(nproc)",
       "make install"
+    ]
+  },
+  "Xinit": {
+    "depindincs": ["gcc", "make", "pkg-config", "libx11-dev", "libxau-dev", "libxdmcp-dev"],
+    "tarball": "xinit-1.4.2.tar.xz",
+    "url": "https://www.x.org/archive/individual/app/xinit-1.4.2.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "Startx": {
+    "depindincs": ["xinit"],
+    "tarball": "",
+    "url": "",
+    "opshonl": {},
+    "build": [
+      "ln -s /usr/bin/xinit /usr/bin/startx"
+    ]
+  },
+  "Firefox": {
+    "depindincs": ["gcc", "make", "pkg-config", "libgtk-3-dev", "libdbus-glib-1-dev", "libxt-dev", "curl"],
+    "tarball": "firefox-118.0.tar.bz2",
+    "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0/source/firefox-118.0.source.tar.bz2",
+    "opshonl": {},
+    "build": [
+      "./mach bootstrap",
+      "./mach build",
+      "./mach install"
+    ]
+  },
+  "Emacs": {
+    "depindincs": ["gcc", "make", "ncurses-dev", "libgtk-3-dev", "libx11-dev", "libxml2-dev", "libjpeg-dev", "libpng-dev"],
+    "tarball": "emacs-29.1.tar.xz",
+    "url": "https://ftp.gnu.org/gnu/emacs/emacs-29.1.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr --with-x",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "NetworkManager": {
+    "depindincs": ["gcc", "make", "pkg-config", "glib2-dev", "libnl-dev", "polkit-dev", "dhcpcd"],
+    "tarball": "NetworkManager-1.42.0.tar.xz",
+    "url": "https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.0.tar.xz",
+    "opshonl": {},
+    "build": [
+      "./configure --prefix=/usr",
+      "make -j$(nproc)",
+      "make install"
+    ]
+  },
+  "PipeWire": {
+    "depindincs": ["gcc", "make", "pkg-config", "glib2-dev", "libspa-dev", "libdbus-1-dev", "alsa-lib-dev", "bluez"],
+    "tarball": "pipewire-0.3.85.tar.xz",
+    "url": "https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/0.3.85/pipewire-0.3.85.tar.xz",
+    "opshonl": {},
+    "build": [
+      "meson builddir",
+      "ninja -C builddir",
+      "ninja -C builddir install"
     ]
   },
   "Bash": {
@@ -75,59 +151,6 @@
       "make install"
     ]
   },
-  "Curl": {
-    "depindincs": ["make", "gcc", "openssl"],
-    "tarball": "curl-7.86.0.tar.xz",
-    "url": "https://curl.se/download/curl-7.86.0.tar.xz",
-    "opshonl": {},
-    "build": [
-      "./configure --prefix=/usr",
-      "make -j$(nproc)",
-      "make install"
-    ]
-  },
-  "Zlib": {
-    "depindincs": ["make", "gcc"],
-    "tarball": "zlib-1.2.12.tar.xz",
-    "url": "https://zlib.net/zlib-1.2.12.tar.xz",
-    "opshonl": {},
-    "build": [
-      "./configure --prefix=/usr",
-      "make -j$(nproc)",
-      "make install"
-    ]
-  },
-  "Openssh": {
-    "depindincs": ["make", "gcc", "zlib1g-dev"],
-    "tarball": "openssh-9.2p1.tar.gz",
-    "url": "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.2p1.tar.gz",
-    "opshonl": {},
-    "build": [
-      "./configure --prefix=/usr",
-      "make -j$(nproc)",
-      "make install"
-    ]
-  },
-  "Ncurses": {
-    "depindincs": ["make", "gcc"],
-    "tarball": "ncurses-6.3.tar.gz",
-    "url": "https://ftp.gnu.org/gnu/ncurses/ncurses-6.3.tar.gz",
-    "opshonl": {},
-    "build": [
-      "./configure --prefix=/usr",
-      "make -j$(nproc)",
-      "make install"
-    ]
-  },
-  "Linux-Firmware": {
-    "depindincs": [],
-    "tarball": "linux-firmware-20230118.tar.xz",
-    "url": "https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-20230118.tar.xz",
-    "opshonl": {},
-    "build": [
-      "tar -xvf linux-firmware-20230118.tar.xz -C /lib/firmware"
-    ]
-  },
   "OpenSSL": {
     "depindincs": ["make", "gcc"],
     "tarball": "openssl-3.0.6.tar.gz",
@@ -164,17 +187,6 @@
     "depindincs": ["make", "gcc"],
     "tarball": "sudo-1.9.11p3.tar.gz",
     "url": "https://www.sudo.ws/dist/sudo-1.9.11p3.tar.gz",
-    "opshonl": {},
-    "build": [
-      "./configure --prefix=/usr",
-      "make -j$(nproc)",
-      "make install"
-    ]
-  },
-  "Coreutils": {
-    "depindincs": ["make", "gcc"],
-    "tarball": "coreutils-8.32.tar.xz",
-    "url": "https://ftp.gnu.org/gnu/coreutils/coreutils-8.32.tar.xz",
     "opshonl": {},
     "build": [
       "./configure --prefix=/usr",
